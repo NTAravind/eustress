@@ -9,7 +9,6 @@ export async function GetActiveWorkshops() {
     const workshops = await prisma.workshop.findMany({
       where: {
         isOpen: true,
-      
       },
       orderBy: {
         date: "asc",
@@ -18,6 +17,20 @@ export async function GetActiveWorkshops() {
     return workshops;
   } catch (error) {
     console.error("Error fetching workshops:", error);
+    return [];
+  }
+}
+
+export async function GetAllWorkshops() {
+  try {
+    const workshops = await prisma.workshop.findMany({
+      select: {
+        id: true,
+      },
+    });
+    return workshops;
+  } catch (error) {
+    console.error("Error fetching all workshops:", error);
     return [];
   }
 }
@@ -35,23 +48,6 @@ export async function GetWorkshopById(id: string) {
     return workshop;
   } catch (error) {
     console.error("Error fetching workshop:", error);
-    return null;
-  }
-}
-
-// NEW: Separate function to get only seat availability
-export async function GetWorkshopSeats(id: string) {
-  try {
-    const workshop = await prisma.workshop.findUnique({
-      where: { id },
-      select: {
-        availableSeats: true,
-        totalSeats: true,
-      },
-    });
-    return workshop;
-  } catch (error) {
-    console.error("Error fetching workshop seats:", error);
     return null;
   }
 }
@@ -171,7 +167,9 @@ export async function RegisterForWorkshop(
       return newRegistration;
     });
 
-    // No revalidatePath here - seats will be fetched dynamically
+    // Revalidate the workshop page to show updated seat count
+    revalidatePath(`/workshops/${workshopId}`, 'page');
+    revalidatePath("/workshops", 'page');
     
     return { success: true, registration };
   } catch (error) {
@@ -231,7 +229,9 @@ export async function CancelRegistration(workshopId: string) {
       });
     });
 
-    // No revalidatePath here - seats will be fetched dynamically
+    // Revalidate the workshop page to show updated seat count and registration status
+    revalidatePath(`/workshops/${workshopId}`, 'page');
+    revalidatePath("/workshops", 'page');
 
     return { success: true };
   } catch (error) {

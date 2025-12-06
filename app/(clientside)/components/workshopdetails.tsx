@@ -1,7 +1,7 @@
 // app/(clientside)/components/workshopdetails.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Workshop, Registration } from "@/app/generated/prisma";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +26,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
-import { RegisterForWorkshop, CancelRegistration, GetWorkshopSeats } from "@/app/(clientside)/actions/workshops";
+import { RegisterForWorkshop, CancelRegistration } from "@/app/(clientside)/actions/workshops";
 import { useRouter } from "next/navigation";
 import { useWorkshopStore } from "@/lib/store";
 
@@ -37,7 +37,9 @@ declare global {
 }
 
 interface WorkshopDetailProps {
-  workshop: Workshop & {
+  workshop: Omit<Workshop, 'date' | 'updatedAt'> & {
+    date: string | Date;
+    updatedAt: string | Date;
     _count: {
       Registration: number;
     };
@@ -60,7 +62,6 @@ export function WorkshopDetail({
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<"razorpay" | "pickup">("razorpay");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [availableSeats, setAvailableSeats] = useState(initialWorkshop.availableSeats);
   const router = useRouter();
 
   const { cart, updateQuantity, addToCart, removeFromCart } = useWorkshopStore();
@@ -70,30 +71,22 @@ export function WorkshopDetail({
   const finalPrice = initialWorkshop.price - (initialWorkshop.price * initialWorkshop.discount) / 100;
   const hasDiscount = initialWorkshop.discount > 0;
   const occupancyPercentage =
-    ((initialWorkshop.totalSeats - availableSeats) / initialWorkshop.totalSeats) * 100;
-  const maxQuantity = Math.min(availableSeats, 10);
+    ((initialWorkshop.totalSeats - initialWorkshop.availableSeats) / initialWorkshop.totalSeats) * 100;
+  const maxQuantity = Math.min(initialWorkshop.availableSeats, 10);
 
-  // Poll for seat updates every 10 seconds
-  useEffect(() => {
-    const pollSeats = async () => {
-      const seats = await GetWorkshopSeats(initialWorkshop.id);
-      if (seats) {
-        setAvailableSeats(seats.availableSeats);
-      }
-    };
-
-    const interval = setInterval(pollSeats, 10000); // Poll every 10 seconds
-
-    return () => clearInterval(interval);
-  }, [initialWorkshop.id]);
-
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("en-IN", {
+  const formatDate = (date: Date | string) => {
+    // Ensure we're working with a Date object and format consistently
+    const dateObj = typeof date === 'string' ? new Date(date) : date;
+    
+    // Use Intl.DateTimeFormat for consistent server/client rendering
+    const formatter = new Intl.DateTimeFormat("en-US", {
       weekday: "long",
       day: "numeric",
       month: "long",
       year: "numeric",
     });
+    
+    return formatter.format(dateObj);
   };
 
   const handleQuantityChange = (newQuantity: number) => {
@@ -107,13 +100,6 @@ export function WorkshopDetail({
       });
     }
     updateQuantity(initialWorkshop.id, newQuantity);
-  };
-
-  const refreshSeats = async () => {
-    const seats = await GetWorkshopSeats(initialWorkshop.id);
-    if (seats) {
-      setAvailableSeats(seats.availableSeats);
-    }
   };
 
   const handleRazorpayPayment = async () => {
@@ -167,8 +153,8 @@ export function WorkshopDetail({
 
             removeFromCart(initialWorkshop.id);
             setDialogOpen(false);
-            await refreshSeats(); // Refresh seats after successful payment
             alert("Payment successful! Registration completed.");
+            // Refresh to get updated seat count
             router.refresh();
           } catch (error) {
             console.error("Payment verification error:", error);
@@ -208,8 +194,8 @@ export function WorkshopDetail({
     if (result?.success) {
       removeFromCart(initialWorkshop.id);
       setDialogOpen(false);
-      await refreshSeats(); // Refresh seats after successful registration
       alert("Registration successful! Please pay at the venue.");
+      // Refresh to get updated seat count
       router.refresh();
     } else {
       alert(result?.error || "Registration failed");
@@ -239,7 +225,7 @@ export function WorkshopDetail({
     setLoading(false);
 
     if (result.success) {
-      await refreshSeats(); // Refresh seats after cancellation
+      // Refresh to get updated seat count and registration status
       router.refresh();
     } else {
       alert(result.error || "Cancellation failed");
@@ -359,14 +345,14 @@ export function WorkshopDetail({
                  <p className="text-xl font-bold text-white group-hover:translate-x-1 transition-transform">{initialWorkshop.location}</p>
               </div>
 
-               {/* Capacity - Now using dynamic availableSeats */}
+               {/* Capacity */}
                <div className={`p-6 hover:bg-neutral-900 transition-colors`}>
                  <div className="flex items-center gap-3 mb-2">
                     <Users className="h-4 w-4 text-red-600" />
                     <span className="text-xs font-bold uppercase tracking-widest text-neutral-500">Capacity</span>
                  </div>
                  <div className="flex justify-between items-end mb-2">
-                   <span className="text-xl font-bold text-white">{availableSeats} Left</span>
+                   <span className="text-xl font-bold text-white">{initialWorkshop.availableSeats} Left</span>
                    <span className="text-xs text-neutral-500">of {initialWorkshop.totalSeats}</span>
                  </div>
                  <div className="w-full bg-neutral-800 h-1">
@@ -378,7 +364,7 @@ export function WorkshopDetail({
             {/* Dynamic Pricing & Action Area */}
             <div className="p-8 flex-grow flex flex-col justify-end">
                
-               {!isRegistered && userEmail && availableSeats > 0 && initialWorkshop.isOpen && (
+               {!isRegistered && userEmail && initialWorkshop.availableSeats > 0 && initialWorkshop.isOpen && (
                   <div className="mb-8">
                     <label className="text-xs font-bold uppercase tracking-widest text-neutral-500 block mb-4">Seat Selection</label>
                     <div className="flex items-center border border-neutral-800">
@@ -426,9 +412,9 @@ export function WorkshopDetail({
                   <DialogTrigger asChild>
                     <Button
                       className="w-full rounded-none bg-red-600 text-white hover:bg-white hover:text-black uppercase font-bold py-6 tracking-wider transition-colors disabled:bg-neutral-800"
-                      disabled={availableSeats === 0 || !initialWorkshop.isOpen}
+                      disabled={initialWorkshop.availableSeats === 0 || !initialWorkshop.isOpen}
                     >
-                      {availableSeats === 0 ? "Sold Out" : "Proceed to Payment"} <ArrowRight className="ml-2 h-4 w-4" />
+                      {initialWorkshop.availableSeats === 0 ? "Sold Out" : "Proceed to Payment"} <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="bg-black border border-neutral-800 text-white sm:max-w-md p-0 gap-0">

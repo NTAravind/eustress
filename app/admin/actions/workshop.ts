@@ -2,9 +2,8 @@
 
 import prisma from "@/lib/prisma";
 import { workshopSchema } from "@/lib/validations/workshop";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { z } from "zod";
 
 export type ActionState = {
   message: string;
@@ -52,27 +51,28 @@ export async function upsertWorkshop(
         where: { id: workshopId },
         data: {
           ...data,
-          // Note: We usually don't reset availableSeats automatically on edit
-          // unless you have specific logic for it.
           updatedAt: new Date(),
         },
       });
 
-      // Revalidate specific workshop detail page
-      revalidatePath(`/workshops/${workshopId}`);
+      // Revalidate the specific workshop page (static content like title, desc, image, price)
+      revalidatePath(`/workshops/${workshopId}`, 'page');
+      // Also revalidate the layout in case it affects navigation
+      revalidatePath(`/workshops/${workshopId}`, 'layout');
     } else {
       // --- CREATE ---
       const newWorkshop = await prisma.workshop.create({
         data: {
           id: crypto.randomUUID(),
           ...data,
-          availableSeats: data.totalSeats, // Default available = total
+          availableSeats: data.totalSeats,
           updatedAt: new Date(),
         },
       });
 
-      // Revalidate the newly created workshop detail page
-      revalidatePath(`/workshops/${newWorkshop.id}`);
+      // Revalidate the new workshop page
+      revalidatePath(`/workshops/${newWorkshop.id}`, 'page');
+      revalidatePath(`/workshops/${newWorkshop.id}`, 'layout');
     }
   } catch (error) {
     console.error("Database Error:", error);
@@ -83,7 +83,7 @@ export async function upsertWorkshop(
   }
 
   // Revalidate workshops listing page
-  revalidatePath("/workshops");
+  revalidatePath("/workshops", 'page');
   redirect("/workshops");
 }
 
@@ -108,7 +108,6 @@ export async function getWorkshops() {
   }
 }
 
-// Optional: Add delete action with revalidation
 export async function deleteWorkshop(workshopId: string): Promise<ActionState> {
   try {
     await prisma.workshop.delete({
@@ -116,8 +115,8 @@ export async function deleteWorkshop(workshopId: string): Promise<ActionState> {
     });
 
     // Revalidate both listing and the deleted workshop page
-    revalidatePath("/workshops");
-    revalidatePath(`/workshops/${workshopId}`);
+    revalidatePath("/workshops", 'page');
+    revalidatePath(`/workshops/${workshopId}`, 'page');
 
     return {
       status: "success",
@@ -132,7 +131,6 @@ export async function deleteWorkshop(workshopId: string): Promise<ActionState> {
   }
 }
 
-// Optional: Toggle workshop open/closed status
 export async function toggleWorkshopStatus(
   workshopId: string,
   isOpen: boolean
@@ -147,8 +145,9 @@ export async function toggleWorkshopStatus(
     });
 
     // Revalidate both listing and specific workshop page
-    revalidatePath("/workshops");
-    revalidatePath(`/workshops/${workshopId}`);
+    // This will update the "CLOSED" badge and registration availability
+    revalidatePath("/workshops", 'page');
+    revalidatePath(`/workshops/${workshopId}`, 'page');
 
     return {
       status: "success",

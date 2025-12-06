@@ -92,6 +92,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!workshop.isOpen) {
+      return NextResponse.json(
+        { error: "Registration is closed" },
+        { status: 400 }
+      );
+    }
+
     // Calculate final price
     const finalPrice = workshop.price - (workshop.price * workshop.discount) / 100;
     const totalAmount = finalPrice * quantity;
@@ -124,8 +131,9 @@ export async function POST(req: NextRequest) {
       return newRegistration;
     });
 
-    revalidatePath(`/workshops/${workshopId}`);
-    revalidatePath("/workshops");
+    // ✅ FIXED: Proper revalidatePath syntax
+    revalidatePath(`/workshops/${workshopId}`, 'page');
+    revalidatePath("/workshops", 'page');
 
     return NextResponse.json({
       success: true,
