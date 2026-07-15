@@ -97,7 +97,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* MASKED REVEAL TITLE */}
-          <h1 className="text-[14vw] md:text-[13vw] leading-[0.85] md:leading-[0.8] font-black tracking-tighter uppercase select-none origin-left text-white">
+          <h1 className="text-[11vw] md:text-[9vw] leading-[0.85] md:leading-[0.8] font-black tracking-tighter uppercase select-none origin-left text-white">
             <div className="overflow-hidden">
               <motion.span 
                 variants={revealText}
@@ -105,12 +105,23 @@ export function HeroSection() {
                 animate="visible"
                 className="block"
               >
-                Eustress
+                Build Strength
                 <motion.span 
                   animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
                   transition={{ duration: 2, repeat: Infinity }}
                   className="inline-block h-3 w-3 md:h-5 md:w-5 bg-red-600 align-baseline ml-2 md:ml-4"
                 />
+              </motion.span>
+            </div>
+            <div className="overflow-hidden">
+              <motion.span
+                variants={revealText}
+                initial="hidden"
+                animate="visible"
+                transition={{ delay: 0.15 }}
+                className="block text-neutral-500"
+              >
+                That Lasts.
               </motion.span>
             </div>
           </h1>
@@ -126,8 +137,8 @@ export function HeroSection() {
               className="col-span-12 md:col-span-6 pr-0 md:pr-8"
             >
               <p className="text-lg md:text-2xl text-neutral-400 font-light leading-snug">
-                Turning positive stress into powerful performance. <br className="hidden md:block" />
-                <span className="text-white font-medium">We optimize motion, not just load.</span>
+                Minimalist, evidence-based training for <br className="hidden md:block" />
+                <span className="text-white font-medium">strength, athleticism, and longevity.</span>
               </p>
             </motion.div>
             
@@ -170,31 +181,117 @@ export function PhilosophySection() {
           <motion.span variants={fadeInUp} className="text-red-600 block text-xs md:text-sm font-bold tracking-[0.2em] mb-6">
             THE PHILOSOPHY
           </motion.span>
-          
-          <motion.h2 className="text-2xl sm:text-3xl md:text-5xl font-bold uppercase leading-tight tracking-tight text-white">
-             {/* Splitting words for individual animation control */}
-            {["Sustainable", "performance", "comes", "not", "just", "from", "training", "hard,", "but", "from"].map((word, i) => (
-              <motion.span 
-                key={i} 
-                variants={fadeInUp} 
-                className="inline-block mr-3 mb-2"
-              >
-                {word}
-              </motion.span>
-            ))}
-            <br className="hidden md:block" />
-            <span className="text-neutral-500 inline-block mr-3">training smart—and</span>
-            
-            <span className="relative inline-block whitespace-nowrap text-white">
-              <span className="relative z-10">recovering smarter</span>
-              <motion.span 
+
+          <motion.h2
+            variants={fadeInUp}
+            className="text-4xl sm:text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tighter text-white mb-10 md:mb-14"
+          >
+            Less is{" "}
+            <span className="relative inline-block whitespace-nowrap">
+              <span className="relative z-10">more.</span>
+              <motion.span
                 initial={{ scaleX: 0, originX: 0 }}
                 whileInView={{ scaleX: 1 }}
-                transition={{ delay: 0.5, duration: 0.8, ease: "circOut" }}
-                className="absolute bottom-1 left-0 h-3 md:h-4 w-full bg-red-600 -z-0 opacity-80 skew-x-[-12deg]"
+                transition={{ delay: 0.4, duration: 0.8, ease: "circOut" }}
+                className="absolute bottom-1 left-0 h-3 md:h-5 w-full bg-red-600 -z-0 opacity-80 skew-x-[-12deg]"
               />
-            </span>.
+            </span>
           </motion.h2>
+
+          <motion.div
+            variants={fadeInUp}
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 border-t border-neutral-800 pt-8 md:pt-12"
+          >
+            <p className="text-base md:text-xl text-neutral-300 leading-relaxed">
+              Our approach is built around the principle of doing the{" "}
+              <span className="text-white font-semibold">minimal training needed to drive progress</span>.
+              Training should support life and sport — not compete with them.
+            </p>
+            <p className="text-base md:text-xl text-neutral-500 leading-relaxed">
+              Our programs are designed to be practical, sustainable and effective over the long term.
+            </p>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ============================================
+// 2b. WHO WE HELP SECTION
+// ============================================
+export function WhoWeHelpSection() {
+  const audiences = [
+    {
+      label: "Busy Individuals",
+      description: "Efficient, effective training that fits your schedule and delivers results without wasted hours."
+    },
+    {
+      label: "Beginners",
+      description: "Clear guidance and a structured plan so you can start strong and build the right habits from day one."
+    },
+    {
+      label: "Experienced Lifters",
+      description: "Intelligent programming to break through plateaus and keep getting stronger, sustainably."
+    },
+    {
+      label: "Athletes",
+      description: "Sport-specific strength and conditioning to sharpen your performance without burning out."
+    },
+    {
+      label: "Older Adults",
+      description: "Stay strong, independent, and reduce your risk of falls with training built for longevity."
+    },
+    {
+      label: "Everyone Else",
+      description: "If you want to build real strength and athleticism that serves you for life — you belong here."
+    }
+  ];
+
+  return (
+    <section className={`border-b ${BORDER_COLOR} bg-black`}>
+      <div className={`border-b ${BORDER_COLOR} bg-neutral-900`}>
+        <div className="container mx-auto px-4 md:px-8 py-3 flex justify-between items-center">
+          <span className="uppercase text-[10px] font-bold tracking-[0.2em] text-white">00 — Who We Help</span>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-8 py-12 md:py-20 border-l-0 md:border-l border-r-0 md:border-r border-neutral-800">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+        >
+          {audiences.map((item, i) => (
+            <motion.div
+              key={i}
+              variants={fadeInUp}
+              whileHover={{ backgroundColor: "#0a0a0a" }}
+              className={`group p-8 md:p-10 border-b border-neutral-800 ${
+                i % 3 !== 2 ? "lg:border-r" : ""
+              } ${
+                i % 2 === 0 ? "sm:border-r lg:border-r-0" : ""
+              } ${
+                i % 2 === 0 && i % 3 !== 2 ? "sm:border-r lg:border-r" : ""
+              } transition-colors duration-300 cursor-default`}
+            >
+              <div className="flex items-start gap-4 mb-4">
+                <motion.span
+                  animate={{ scale: [1, 1.3, 1] }}
+                  transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                  className="mt-1 w-2 h-2 rounded-full bg-red-600 flex-shrink-0"
+                />
+                <h3 className="text-white font-bold uppercase tracking-widest text-sm group-hover:text-red-500 transition-colors duration-300">
+                  {item.label}
+                </h3>
+              </div>
+              <p className="text-neutral-500 text-sm md:text-base leading-relaxed pl-6 group-hover:text-neutral-300 transition-colors duration-300">
+                {item.description}
+              </p>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>
@@ -518,7 +615,8 @@ export default function HomeClient({ workshops }: HomeClientProps) {
     <main className="bg-neutral-950 min-h-screen text-white selection:bg-red-600 selection:text-white">
       <HeroSection />
       <PhilosophySection />
-      <WorkshopsSection workshops={workshops} />
+      <WhoWeHelpSection />
+      {/* <WorkshopsSection workshops={workshops} /> */}
       <CoachSection image={COACH_IMAGE} />
       <GallerySection images={galleryImages} />
       <FooterSection />

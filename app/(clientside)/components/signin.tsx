@@ -51,7 +51,7 @@ export default function SignIn() {
         {/* Card Header */}
         <motion.div variants={itemVariants} className="border-b border-neutral-800 p-8 text-center">
           <h1 className="text-4xl font-black uppercase tracking-tighter text-white mb-2">
-            Eustress
+            Eustress Performance
             <motion.span 
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}

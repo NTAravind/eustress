@@ -29,9 +29,11 @@ export default function Navbar() {
 
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Workshops', href: '/workshops' },
-    { name: 'Programs', href: '/#programs' }, 
-    { name: 'Coach', href: '/#about' },      
+    { name: 'Coaching', href: '/#coaching' },
+    { name: 'Programs', href: '/#programs' },
+    { name: 'About the Coach', href: '/#about' },
+    { name: 'Contact Us', href: '/#contact' },
+    // { name: 'Workshops', href: '/workshops' }, // Uncomment when workshops go live
   ];
 
   return (
@@ -62,15 +64,18 @@ export default function Navbar() {
               transition={{ type: "spring", stiffness: 300 }}
               onError={(e) => { e.currentTarget.src = 'https://placehold.co/56x56/171717/FFFFFF?text=Logo'; }}
             />
-            <span className="text-3xl font-black text-white tracking-tighter uppercase select-none relative">
-              Eustress  
-              {/* Animated Red Square */}
-              <motion.span 
-                variants={{
-                  hover: { rotate: 180, backgroundColor: "#ffffff" }
-                }}
-                className="inline-flex w-[10px] h-[10px] bg-red-600 ml-1 transform translate-y-[-2px]"
-              />
+            <span className="flex flex-col leading-none tracking-tighter uppercase select-none relative">
+              <span className="text-base font-black text-white">Eustress</span>
+              <span className="text-base font-light text-neutral-400 flex items-center gap-1">
+                Performance
+                {/* Animated Red Square */}
+                <motion.span
+                  variants={{
+                    hover: { rotate: 180, backgroundColor: "#ffffff" }
+                  }}
+                  className="inline-flex w-[8px] h-[8px] bg-red-600"
+                />
+              </span>
             </span>
           </motion.a>
 
