@@ -5,6 +5,7 @@ import { GetActiveWorkshops } from './actions/workshops';
 // Image configuration
 export const images = {
   coach: '/images/IMG_2688 (1).PNG',
+  coach2: '/images/IMG_2679 (2).PNG',
   training: '/images/IMG-20250901-WA0034.jpg',
   kettlebell: '/images/IMG-20250901-WA0032.jpg',
   gallery1: '/images/IMG-20250726-WA0059.jpg',
@@ -21,7 +22,7 @@ export default async function EustressLanding() {
       <PhilosophySection />
       <WhoWeHelpSection />
       {/* <WorkshopsSection workshops={workshops} /> */}
-      <CoachSection image={images.coach} />
+      <CoachSection image={images.coach} image2={images.coach2} />
       <GallerySection images={[images.kettlebell, images.gallery1, images.gallery2, images.training]} />
       <FooterSection />
     </div>

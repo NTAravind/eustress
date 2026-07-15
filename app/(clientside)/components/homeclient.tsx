@@ -79,16 +79,16 @@ export function HeroSection() {
         />
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10 py-12 md:py-20">
+      <div className="container mx-auto px-5 md:px-8 relative z-10 pt-28 pb-10 md:py-20">
         <div className="flex flex-col">
-          {/* Logo Parallax */}
+          {/* Logo */}
           <motion.div 
             style={{ y: y2, opacity }}
-            className="mb-6 md:mb-8 w-[140px] md:w-[240px] relative"
+            className="mb-5 md:mb-8 w-[90px] md:w-[200px] relative"
           >
             <Image 
               src={LOGO_PATH}
-              alt="Eustress Brand Logo"
+              alt="Eustress Performance Brand Logo"
               width={250}
               height={250}
               className="w-full h-auto object-contain"
@@ -96,8 +96,8 @@ export function HeroSection() {
             />
           </motion.div>
 
-          {/* MASKED REVEAL TITLE */}
-          <h1 className="text-[11vw] md:text-[9vw] leading-[0.85] md:leading-[0.8] font-black tracking-tighter uppercase select-none origin-left text-white">
+          {/* HEADLINE */}
+          <h1 className="text-[15vw] sm:text-[13vw] md:text-[9vw] leading-[0.88] font-black tracking-tighter uppercase select-none text-white">
             <div className="overflow-hidden">
               <motion.span 
                 variants={revealText}
@@ -109,7 +109,7 @@ export function HeroSection() {
                 <motion.span 
                   animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="inline-block h-3 w-3 md:h-5 md:w-5 bg-red-600 align-baseline ml-2 md:ml-4"
+                  className="inline-block h-2.5 w-2.5 md:h-5 md:w-5 bg-red-600 align-baseline ml-2 md:ml-4"
                 />
               </motion.span>
             </div>
@@ -126,37 +126,34 @@ export function HeroSection() {
             </div>
           </h1>
           
+          {/* SUBHEADLINE + CTA */}
           <motion.div 
             style={{ y: y1, opacity }} 
-            className="grid grid-cols-1 md:grid-cols-12 mt-8 md:mt-12 border-t border-neutral-800 pt-6 md:pt-8 gap-8 md:gap-0"
+            className="mt-7 md:mt-12 border-t border-neutral-800 pt-5 md:pt-8 flex flex-col sm:flex-row sm:items-end justify-between gap-6"
           >
-            <motion.div 
+            <motion.p
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="col-span-12 md:col-span-6 pr-0 md:pr-8"
+              className="text-base md:text-2xl text-neutral-400 font-light leading-snug max-w-sm md:max-w-lg"
             >
-              <p className="text-lg md:text-2xl text-neutral-400 font-light leading-snug">
-                Minimalist, evidence-based training for <br className="hidden md:block" />
-                <span className="text-white font-medium">strength, athleticism, and longevity.</span>
-              </p>
-            </motion.div>
+              Minimalist, evidence-based training for{" "}
+              <span className="text-white font-medium">strength, athleticism, and longevity.</span>
+            </motion.p>
             
-            <div className="col-span-12 md:col-span-6 flex flex-col justify-end items-start md:items-end">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 text-white group cursor-pointer"
-              >
-                <div className="relative overflow-hidden p-3 border border-neutral-700 group-hover:border-red-600 transition-colors rounded-none">
-                  <motion.div 
-                    className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"
-                  />
-                  <ArrowDown className="relative z-10 w-5 h-5 group-hover:text-white transition-colors" />
-                </div>
-                <span className="uppercase tracking-widest text-xs font-bold group-hover:text-red-600 transition-colors">Scroll to Begin</span>
-              </motion.button>
-            </div>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-3 text-white group cursor-pointer shrink-0"
+            >
+              <div className="relative overflow-hidden p-2.5 md:p-3 border border-neutral-700 group-hover:border-red-600 transition-colors">
+                <motion.div 
+                  className="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"
+                />
+                <ArrowDown className="relative z-10 w-4 h-4 md:w-5 md:h-5 group-hover:text-white transition-colors" />
+              </div>
+              <span className="uppercase tracking-widest text-[10px] md:text-xs font-bold group-hover:text-red-600 transition-colors">Scroll to Begin</span>
+            </motion.button>
           </motion.div>
         </div>
       </div>
@@ -348,10 +345,10 @@ export function WorkshopsSection({ workshops }: WorkshopsSectionProps) {
 // ============================================
 interface CoachSectionProps {
   image: string;
+  image2?: string;
 }
 
-export function CoachSection({ image }: CoachSectionProps) {
-  // Image Reveal Variant
+export function CoachSection({ image, image2 }: CoachSectionProps) {
   const curtainReveal: Variants = {
     hidden: { height: "100%" },
     visible: { 
@@ -368,6 +365,9 @@ export function CoachSection({ image }: CoachSectionProps) {
     }
   };
 
+  // Use image2 (the recent photo) if provided, fall back to image
+  const displayImage = image2 ?? image;
+
   return (
     <section id="about" className={`border-b ${BORDER_COLOR}`}>
       <div className={`border-b ${BORDER_COLOR} bg-neutral-900`}>
@@ -378,34 +378,31 @@ export function CoachSection({ image }: CoachSectionProps) {
       
       <div className="container mx-auto border-l-0 md:border-l border-r-0 md:border-r border-neutral-800">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          {/* Image Side */}
+
+          {/* IMAGE SIDE */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className={`relative aspect-square md:aspect-auto md:min-h-[800px] border-b md:border-b-0 md:border-r ${BORDER_COLOR} group overflow-hidden`}
+            className={`relative aspect-[3/4] md:aspect-auto md:min-h-[750px] border-b md:border-b-0 md:border-r ${BORDER_COLOR} group overflow-hidden`}
           >
             <motion.div variants={imageScale} className="w-full h-full relative">
-               <Image 
-                src={image} 
-                alt="Sandeep Narayan" 
+              <Image 
+                src={displayImage}
+                alt="Sandeep Narayan — Strength Coach" 
                 fill 
-                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out"
+                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out object-top"
               />
             </motion.div>
-            
             {/* Curtain Overlay */}
-            <motion.div 
-              variants={curtainReveal} 
-              className="absolute inset-0 bg-red-600 z-20" 
-            />
-            
+            <motion.div variants={curtainReveal} className="absolute inset-0 bg-red-600 z-20" />
             <div className="absolute bottom-0 left-0 bg-black/80 backdrop-blur-sm border-t border-r border-neutral-800 p-4 md:p-6 pr-8 md:pr-12 z-30">
-              <p className="text-white font-bold uppercase tracking-widest text-xs md:text-sm">Sandeep Narayan, CSCS</p>
+              <p className="text-white font-bold uppercase tracking-widest text-xs">Sandeep Narayan</p>
+              <p className="text-neutral-500 text-[10px] uppercase tracking-widest mt-0.5">Strength Coach &amp; Educator</p>
             </div>
           </motion.div>
 
-          {/* Text Side */}
+          {/* TEXT SIDE */}
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -413,40 +410,49 @@ export function CoachSection({ image }: CoachSectionProps) {
             variants={staggerContainer}
             className="p-6 md:p-16 flex flex-col justify-center bg-black"
           >
-             <div className="overflow-hidden mb-6 md:mb-8">
-               <motion.h2 variants={revealText} className="text-4xl md:text-6xl font-black uppercase leading-[0.9] text-white">
-                 Engineer<br/><span className="text-neutral-600">Turned</span><br/>Coach
-               </motion.h2>
-             </div>
+            <div className="overflow-hidden mb-6 md:mb-8">
+              <motion.h2 variants={revealText} className="text-4xl md:text-6xl font-black uppercase leading-[0.9] text-white">
+                About<br/><span className="text-neutral-600">the</span><br/>Coach
+              </motion.h2>
+            </div>
             
-             <motion.div variants={fadeInUp} className="space-y-6 text-base md:text-lg text-neutral-300 leading-relaxed">
+            <motion.div variants={fadeInUp} className="space-y-5 text-base md:text-lg text-neutral-300 leading-relaxed">
               <p>
-                An engineer-turned-strength and conditioning coach, I transitioned from IT to pursue a passion for human movement and performance.
+                Hi, I&apos;m Sandeep. I&apos;ve been a{" "}
+                <span className="text-white font-medium">strength coach and educator since 2014</span>.
               </p>
               <p>
-                Since earning my certifications, I have worked with individuals across all fitness levels—from the general population to competitive athletes.
+                Throughout my career, I&apos;ve worked with youth athletes, older adults, and general population clients looking to become stronger, healthier, and more capable. Along the way, I&apos;ve studied a wide range of training methods and earned certifications including NSCA-CSCS and ACSM-CPT.
               </p>
-              
-              <div className="border-l-4 border-red-600 pl-6 py-2 my-8">
-                <p className="text-white font-bold italic text-lg md:text-xl">
-                  &quot;My mission is to help you train with purpose—and thrive in movement.&quot;
+
+              <div className="border-l-4 border-red-600 pl-6 py-2 my-6">
+                <p className="text-white font-medium italic text-base md:text-lg">
+                  &quot;After more than a decade of coaching, learning, and refining my methods, I&apos;ve come to believe that lasting results come from doing the basics consistently.&quot;
                 </p>
               </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                {[
-                  { title: 'CSCS', sub: 'NSCA Certified (2019)' },
-                  { title: 'CPT', sub: 'ACSM Certified (2018)' }
-                ].map((cert, i) => (
-                  <motion.div 
-                    key={i}
-                    whileHover={{ y: -5, borderColor: '#DC2626' }}
-                    className="bg-neutral-900 p-6 border border-neutral-800 transition-colors group cursor-default"
-                  >
-                    <span className="block text-red-600 font-bold text-2xl mb-1 group-hover:text-white transition-colors">{cert.title}</span>
-                    <span className="text-[10px] text-neutral-500 uppercase tracking-widest">{cert.sub}</span>
-                  </motion.div>
-                ))}
+
+              <p>
+                My approach is built around helping people gain strength and athleticism through practical, sustainable training — not unnecessary complexity.
+              </p>
+
+              {/* One-on-one callout */}
+              <div className="mt-6 pt-6 border-t border-neutral-800">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold mb-3">Coaching Availability</p>
+                <div className="flex gap-3">
+                  {[
+                    { label: 'In-Person', detail: 'One-on-one' },
+                    { label: 'Online', detail: 'One-on-one' },
+                  ].map((item, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ y: -3, borderColor: '#DC2626' }}
+                      className="flex-1 bg-neutral-900 border border-neutral-800 px-4 py-4 transition-colors cursor-default group"
+                    >
+                      <span className="block text-white font-bold text-xs uppercase tracking-widest group-hover:text-red-500 transition-colors">{item.label}</span>
+                      <span className="block text-neutral-500 text-[11px] mt-1.5">{item.detail}</span>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </motion.div>
@@ -455,6 +461,7 @@ export function CoachSection({ image }: CoachSectionProps) {
     </section>
   );
 }
+
 
 // ============================================
 // 5. GALLERY SECTION
