@@ -16,106 +16,67 @@ const EASING: [number, number, number, number] = [0.22, 1, 0.36, 1];
 export function WhatsAppFloat() {
   const [isHovered, setIsHovered] = useState(false);
 
-  // WhatsApp Link Construction
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     PREFILLED_MESSAGE
   )}`;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, ease: EASING, delay: 1 }}
-      className="fixed bottom-6 right-6 md:bottom-12 md:right-12 z-50 flex flex-col items-end gap-2"
+      transition={{ duration: 0.6, ease: EASING, delay: 1.2 }}
+      className="fixed bottom-8 right-8 md:bottom-10 md:right-10 z-50 flex items-center gap-3"
     >
-      {/* Label Tooltip (Appears on Hover) */}
+      {/* Slide-in label */}
       <AnimatePresence>
         {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
+          <motion.span
+            initial={{ opacity: 0, x: 8 }}
             animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 10 }}
-            transition={{ duration: 0.3, ease: EASING }}
-            className="absolute right-full mr-4 top-1/2 -translate-y-1/2 whitespace-nowrap hidden md:block"
+            exit={{ opacity: 0, x: 8 }}
+            transition={{ duration: 0.2, ease: EASING }}
+            className="hidden md:block text-[10px] uppercase font-bold tracking-[0.2em] text-white bg-neutral-900 border border-neutral-800 px-3 py-2 whitespace-nowrap"
           >
-            <div className="bg-neutral-900 border border-neutral-800 px-3 py-2 text-[10px] uppercase font-bold tracking-[0.2em] text-white">
-              Start <span className="text-red-600">Now</span>
-            </div>
-            {/* Connector Line */}
-            <div className="absolute right-[-16px] top-1/2 w-4 h-px bg-red-600/50" />
-          </motion.div>
+            Chat with us
+          </motion.span>
         )}
       </AnimatePresence>
 
-      {/* Main Button */}
+      {/* Button */}
       <a
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="relative group cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        className="relative flex items-center justify-center w-12 h-12 bg-white group"
+        aria-label="Chat on WhatsApp"
       >
-        {/* Decorative Glow effect */}
-        <div className="absolute -inset-1 bg-red-600/50 opacity-20 group-hover:opacity-40 blur-md transition-opacity duration-500" />
+        {/* Pulse ring */}
+        <span className="absolute inset-0 rounded-none">
+          <span className="absolute inset-0 animate-ping bg-white opacity-20 group-hover:opacity-0 transition-opacity duration-300" />
+        </span>
 
-        <div
-          className={`
-            relative flex items-center justify-center 
-            w-14 h-14 md:w-16 md:h-16 
-            bg-red-600 
-            border border-red-500 
-            group-hover:bg-red-700
-            group-hover:border-red-400
-            transition-colors duration-300
-          `}
-        >
-          {/* Internal Grid Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff33_1px,transparent_1px),linear-gradient(to_bottom,#ffffff33_1px,transparent_1px)] bg-[size:0.5rem_0.5rem] pointer-events-none" />
-
-          {/* Corner Accents (Industrial Feel) */}
-          <div className="absolute top-0 left-0 w-1 h-1 bg-red-500 group-hover:bg-red-400 transition-colors duration-300" />
-          <div className="absolute bottom-0 right-0 w-1 h-1 bg-red-500 group-hover:bg-red-400 transition-colors duration-300" />
-
-          {/* Icon Container */}
-          <div className="relative z-10 p-3">
-            <WhatsAppIcon className="w-6 h-6 md:w-8 md:h-8 text-white transition-colors duration-300" />
-          </div>
-
-          {/* Status Dot (Online Indicator) - White for contrast */}
-          <span className="absolute top-3 right-3 flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-          </span>
-        </div>
-
-        {/* Text Slide-out (Mobile Optimized: Hidden on very small screens to save space, or kept minimal) */}
-        <div className="absolute top-full right-0 mt-2 w-full text-center overflow-hidden h-0 group-hover:h-auto transition-all duration-300">
-          <p className="text-[9px] uppercase tracking-widest text-red-600 font-bold bg-black/80 backdrop-blur-sm py-1">
-            Chat
-          </p>
-        </div>
+        {/* Icon */}
+        <WhatsAppIcon className="w-5 h-5 text-black transition-transform duration-300 group-hover:scale-110" />
       </a>
     </motion.div>
   );
 }
 
 // ============================================
-// SVG ICON (Custom styled for minimal look)
+// MINIMAL FILLED SVG ICON
 // ============================================
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
     <svg
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5" // Thinner stroke matches the "Light" text in your hero
-      strokeLinecap="square" // Square linecaps for industrial feel
-      strokeLinejoin="miter"
+      fill="currentColor"
       className={className}
+      aria-hidden="true"
     >
-      <path d="M3 21l1.65-3.8C3.3 15.6 2.6 13.5 2.6 11.3 2.6 5.8 7.2 1.3 12.7 1.3c2.7 0 5.3 1.1 7.2 3 1.9 1.9 3 4.5 3 7.2 0 5.5-4.5 10-10.1 10-1.8 0-3.5-.5-5-1.4L3 21z" />
-      <path d="M16.6 14.3c-.2-.1-1.3-.7-1.5-.7-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.1-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.3 0-.4.1-.5.1-.1.2-.3.4-.4.1-.1.2-.3.3-.4.1-.2.1-.3 0-.4-.1-.1-.4-1.1-.6-1.4-.2-.4-.4-.3-.6-.3h-.5c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7 0 1.6 1.2 3.1 1.3 3.3.2.2 2.3 3.6 5.6 5 2.2.9 3 .8 4 .7.9 0 2-.8 2.3-1.6.3-.8.3-1.5.2-1.6-.1-.1-.3-.2-.5-.3z" />
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 2.114.553 4.1 1.523 5.824L.057 23.428a.5.5 0 0 0 .609.61l5.657-1.455A11.943 11.943 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.37l-.36-.214-3.724.957.984-3.63-.235-.374A9.817 9.817 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z" />
     </svg>
   );
 }
