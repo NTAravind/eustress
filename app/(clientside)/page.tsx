@@ -4,8 +4,8 @@ import { GetActiveWorkshops } from './actions/workshops';
 
 // Image configuration
 export const images = {
-  coach: '/images/IMG_2688 (1).PNG',
-  coach2: '/images/IMG_2688 (1).PNG',
+  coach: '/images/IMG_2859 (1).PNG',
+  coach2: '/images/IMG_2859 (1).PNG',
   training: '/images/IMG-20250901-WA0034.jpg',
   kettlebell: '/images/IMG-20250901-WA0032.jpg',
   gallery1: '/images/IMG-20250726-WA0059.jpg',

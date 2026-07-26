@@ -29,7 +29,7 @@ export default function Navbar() {
 
   const navItems = [
     { name: 'Home', href: '/' },
-    { name: 'Coaching', href: '/#coaching' },
+    { name: 'Training', href: '/training' },
     { name: 'Programs', href: '/#programs' },
     { name: 'About the Coach', href: '/#about' },
     { name: 'Contact Us', href: '/#contact' },
