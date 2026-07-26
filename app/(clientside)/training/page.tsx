@@ -16,6 +16,8 @@ import { motion, Variants } from 'framer-motion';
 // CONFIG & SHARED STYLES
 // ============================================
 const BORDER_COLOR = 'border-neutral-800';
+const WHATSAPP_NUMBER = '918660485788';
+const ONLINE_ENQUIRY_MSG = "Hi, I'm interested in the Online Training package. Could you share more details?";
 
 const EASING: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -440,7 +442,9 @@ function PricingSection() {
               </div>
 
               <motion.a
-                href="/#contact"
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(ONLINE_ENQUIRY_MSG)}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.04, backgroundColor: "#fff", color: "#000" }}
                 whileTap={{ scale: 0.97 }}
                 className="mt-10 inline-flex items-center gap-3 bg-transparent border border-neutral-700 text-white px-8 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-colors duration-300"
