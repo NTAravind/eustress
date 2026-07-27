@@ -13,7 +13,7 @@ import {
 import { motion, Variants } from 'framer-motion';
 
 // ============================================
-// CONFIG & SHARED STYLE
+// CONFIG  SHARED STYLE
 // ============================================
 const BORDER_COLOR = 'border-neutral-800';
 const WHATSAPP_NUMBER = '918660485788';
@@ -398,11 +398,23 @@ function PricingSection() {
               })}
             </div>
 
-            <div className="px-8 py-5 flex items-center gap-2 text-neutral-600">
-              <Clock className="w-3.5 h-3.5 flex-shrink-0" />
-              <span className="text-[11px] uppercase tracking-widest font-medium">
-                All sessions are 60 minutes.
-              </span>
+            <div className={`border-t ${BORDER_COLOR} px-8 py-5 flex flex-wrap items-center justify-between gap-4`}>
+              <div className="flex items-center gap-2 text-neutral-600">
+                <Clock className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="text-[11px] uppercase tracking-widest font-medium">
+                  All sessions are 60 minutes.
+                </span>
+              </div>
+              <motion.a
+                href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hi, I'm interested in In-Person Training. Could you share more details?")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.04, backgroundColor: '#fff', color: '#000' }}
+                whileTap={{ scale: 0.97 }}
+                className="inline-flex items-center gap-2 border border-neutral-700 text-white px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] transition-colors duration-300"
+              >
+                Enquire Now
+              </motion.a>
             </div>
           </motion.div>
 
