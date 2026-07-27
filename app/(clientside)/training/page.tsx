@@ -144,7 +144,7 @@ function HeroSection() {
             />
 
             <Image
-              src="/images/IMG_2679 (2).PNG"
+              src="/images/IMG_2859 (1).PNG"
               alt="Barbell back squat in home gym"
               fill
               priority
