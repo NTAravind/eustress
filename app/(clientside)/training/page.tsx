@@ -13,7 +13,7 @@ import {
 import { motion, Variants } from 'framer-motion';
 
 // ============================================
-// CONFIG & SHARED STYLES
+// CONFIG & SHARED STYLE
 // ============================================
 const BORDER_COLOR = 'border-neutral-800';
 const WHATSAPP_NUMBER = '918660485788';
@@ -144,7 +144,7 @@ function HeroSection() {
             />
 
             <Image
-              src="/images/IMG_2859 (1).PNG"
+              src="/images/image.png"
               alt="Barbell back squat in home gym"
               fill
               priority
@@ -294,9 +294,9 @@ const inPersonRows = [
     icon: Calendar,
     label: "1-Month Package",
     sublabel: "12 sessions (valid for 1 month)",
-    price: "₹14,400",
+    price: "₹15,000",
     priceSub: "for 12 sessions",
-    detail: "₹1,200 per session",
+    detail: "₹1,250 per session",
   },
   {
     icon: Calendar,
@@ -375,21 +375,21 @@ function PricingSection() {
                         <p className="text-white font-bold text-sm uppercase tracking-wider">
                           {row.label}
                         </p>
-                        <p className="text-neutral-500 text-xs mt-0.5">
+                        <p className="text-neutral-400 text-sm mt-1">
                           {row.sublabel}
                         </p>
                         {row.detail && (
-                          <p className="text-neutral-600 text-[11px] mt-1 font-medium">
+                          <p className="text-red-500 text-sm mt-1 font-semibold">
                             {row.detail}
                           </p>
                         )}
                       </div>
                     </div>
                     <div className="text-right flex-shrink-0">
-                      <p className="text-white font-black text-lg tracking-tight">
+                      <p className="text-white font-black text-xl tracking-tight">
                         {row.price}
                       </p>
-                      <p className="text-neutral-500 text-[11px] mt-0.5">
+                      <p className="text-neutral-400 text-xs mt-1">
                         {row.priceSub}
                       </p>
                     </div>
