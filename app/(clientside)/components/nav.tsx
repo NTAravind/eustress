@@ -28,11 +28,9 @@ export default function Navbar() {
   }, []);
 
   const navItems = [
-    { name: 'Home', href: '/' },
     { name: 'Training', href: '/training' },
-    { name: 'Programs', href: '/#programs' },
+    { name: 'Gallery', href: '/gallery' },
     { name: 'About the Coach', href: '/#about' },
-    { name: 'Contact Us', href: '/#contact' },
     // { name: 'Workshops', href: '/workshops' }, // Uncomment when workshops go live
   ];
 
@@ -131,6 +129,7 @@ export default function Navbar() {
             <div className="pl-8">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
+                  onClick={() => window.location.href = '/training#pricing'}
                   className="rounded-none bg-white text-black hover:bg-red-600 hover:text-white border border-transparent transition-colors font-bold uppercase tracking-wider text-xs px-6 py-6"
                 >
                   Get Started
@@ -197,7 +196,10 @@ export default function Navbar() {
                 transition={{ delay: 0.4 }}
                 className="p-6 mt-auto mb-20"
               >
-                <Button className="w-full rounded-none bg-red-600 text-white hover:bg-white hover:text-black uppercase font-bold py-6 tracking-wider transition-colors text-lg">
+                <Button 
+                  onClick={() => { window.location.href = '/training#pricing'; setIsOpen(false); }}
+                  className="w-full rounded-none bg-red-600 text-white hover:bg-white hover:text-black uppercase font-bold py-6 tracking-wider transition-colors text-lg"
+                >
                   Start Training
                 </Button>
               </motion.div>

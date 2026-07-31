@@ -553,7 +553,10 @@ export function FooterSection() {
           className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 mb-16 md:mb-24 border-b border-neutral-800 pb-16"
         >
           <motion.div variants={fadeInUp}>
-            <h2 className="text-5xl md:text-9xl font-black uppercase tracking-tighter mb-8 text-white leading-none group cursor-pointer">
+            <h2 
+              onClick={() => window.location.href = '/training#pricing'}
+              className="text-5xl md:text-9xl font-black uppercase tracking-tighter mb-8 text-white leading-none group cursor-pointer"
+            >
               <motion.span 
                 className="block"
                 whileHover={{ x: 20 }} 
@@ -610,12 +613,15 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ workshops }: HomeClientProps) {
-  // Placeholder images for the gallery - replace with your real images
   const galleryImages = [
-    "/images/gallery1.jpg",
-    "/images/gallery2.jpg",
-    "/images/gallery3.jpg", 
-    "/images/gallery4.jpg"
+    "/gallery/IMG_2893.png",
+    "/gallery/IMG_2894.png",
+    "/gallery/IMG_2895.png",
+    "/gallery/IMG_2896.png",
+    "/gallery/IMG_2897.png",
+    "/gallery/IMG_2898.png",
+    "/gallery/IMG_2899.png",
+    "/gallery/IMG_2900.png",
   ];
 
   return (
@@ -626,6 +632,23 @@ export default function HomeClient({ workshops }: HomeClientProps) {
       {/* <WorkshopsSection workshops={workshops} /> */}
       <CoachSection image={COACH_IMAGE} />
       <GallerySection images={galleryImages} />
+      {/* View Full Gallery CTA */}
+      <div className="bg-neutral-950 border-b border-neutral-800">
+        <div className="container mx-auto px-4 md:px-8 py-8 flex items-center justify-between">
+          <p className="text-neutral-500 text-[11px] uppercase tracking-[0.2em] font-medium">
+            Showing 8 of 12 shots
+          </p>
+          <motion.a
+            href="/gallery"
+            whileHover={{ x: 6 }}
+            transition={{ type: 'spring', stiffness: 300 }}
+            className="flex items-center gap-3 text-white text-[11px] font-bold uppercase tracking-[0.2em] group"
+          >
+            <span className="group-hover:text-red-500 transition-colors">View Full Gallery</span>
+            <ArrowRight className="w-4 h-4 text-red-600 group-hover:translate-x-1 transition-transform" />
+          </motion.a>
+        </div>
+      </div>
       <FooterSection />
     </main>
   );

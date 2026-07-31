@@ -112,7 +112,7 @@ function HeroSection() {
 
             <motion.div variants={fadeInUp} className="mt-8 flex flex-wrap gap-4">
               <motion.a
-                href="/#contact"
+                href="#pricing"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
                 className="inline-flex items-center gap-3 bg-red-600 text-white px-7 py-4 text-xs font-bold uppercase tracking-[0.18em] hover:bg-white hover:text-black transition-colors duration-300"
