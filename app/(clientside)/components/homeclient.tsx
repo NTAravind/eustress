@@ -84,16 +84,21 @@ export function HeroSection() {
           {/* Logo */}
           <motion.div 
             style={{ y: y2, opacity }}
-            className="mb-5 md:mb-8 w-[90px] md:w-[200px] relative"
+            className="mb-5 md:mb-8 flex flex-col items-start"
           >
-            <Image 
-              src={LOGO_PATH}
-              alt="Eustress Performance Brand Logo"
-              width={250}
-              height={250}
-              className="w-full h-auto object-contain"
-              priority
-            />
+            <div className="w-[90px] md:w-[200px] relative mb-3">
+              <Image 
+                src={LOGO_PATH}
+                alt="Eustress Performance Brand Logo"
+                width={250}
+                height={250}
+                className="w-full h-auto object-contain"
+                priority
+              />
+            </div>
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-red-600">
+              Optimal Stress, Maximal Performance
+            </span>
           </motion.div>
 
           {/* HEADLINE */}
@@ -594,7 +599,10 @@ export function FooterSection() {
         </motion.div>
         
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center text-[10px] uppercase tracking-[0.2em] text-neutral-600 gap-4 md:gap-0">
-          <p>&copy; {new Date().getFullYear()} Eustress Performance. All Rights Reserved.</p>
+          <div className="flex flex-col gap-1">
+            <p>&copy; {new Date().getFullYear()} Eustress Performance. All Rights Reserved.</p>
+            <p className="text-neutral-500 font-bold">Optimal Stress, Maximal Performance</p>
+          </div>
           <div className="flex gap-8">
             <a href="#" className="hover:text-white transition-colors">Instagram</a>
             <a href="#" className="hover:text-white transition-colors">LinkedIn</a>

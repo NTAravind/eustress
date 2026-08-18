@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Eustress Performance | Build Strength That Lasts",
+  title: "Eustress Performance | Optimal Stress, Maximal Performance",
   description: "Minimalist, evidence-based training for strength, athleticism, and longevity. Programs designed to be practical, sustainable and effective over the long term.",
 };
 
